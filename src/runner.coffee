@@ -146,11 +146,10 @@ class Runner
     debug 'constructor', @options
 
     @options.port = 8088 if not @options.port
-    polyTimeout = process.env['JSJOB_TIMEOUT']
-    @options.timeout = parseInt(polyTimeout)*1000 if polyTimeout and not @options.timeout
-    @options.verbose = true if process.env['JSJOB_VERBOSE']
-    @options.detailsLog = true
-    @options.detailsLog = process.env['JSJOB_DETAILS_LOG'] == 'true' if process.env['JSJOB_DETAILS_LOG']?
+    timeout = process.env['JSJOB_TIMEOUT']
+    @options.timeout = parseInt(timeout)*1000 if timeout and not @options.timeout
+    @options.verbose = true if process.env['JSJOB_VERBOSE'] and not @options.verbose?
+    @options.detailsLog = process.env['JSJOB_DETAILS_LOG'] == 'true' if process.env['JSJOB_DETAILS_LOG']? and not @options.detailsLog?
     @options.scripts = [ polyFillFunctionBind ] if not @options.scripts
 
   start: (callback) ->
