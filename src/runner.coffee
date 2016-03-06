@@ -127,6 +127,7 @@ class Runner
       return callback err if typeof callback == 'function'
 
   runJob: (codeUrl, inputData, jobOptions, callback) ->
+    debug 'running job', codeUrl, typeof inputData, typeof jobOptions
 
     jobOptions.scripts = @options.scripts if not jobOptions.scripts
     @options.allowedResources = jobOptions.allowedResources
@@ -267,7 +268,8 @@ class PhantomProcess
       allowed = [ job.filter, baseUrl ].concat @options.allowedResources
       args.push JSON.stringify(allowed)
 
-    console.log "Running #{prog} " + args.join ' ' if @options.verbose
+    cmd = "#{prog}" + args.join ' '
+    console.log "Running '#{cmd}'" if @options.verbose
     @child = child_process.spawn prog, args
 
     onHardTimeout = () =>
