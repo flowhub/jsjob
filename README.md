@@ -1,9 +1,10 @@
-# RTRT
+# JsJob
 
 Run arbitrary JavaScript code as jobs, in a browser-based sandbox.
 
 ## Status
-*Just words*
+*In progress*
+
 
 ## License
-MIT
+[MIT](./LICENSE.md)
