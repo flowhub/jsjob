@@ -73,17 +73,6 @@ describe 'Runner', ->
         chai.expect(err.stack).to.contain 'return-thrown-error.js:3'
         done()
 
-  describe 'filter never returning data', ->
-    it 'should fail after timeout', (done) ->
-      @timeout 4000
-      filter = local 'never-returning'
-      page = ""
-      options = {}
-      solver.runJob filter, page, options, (err, solution, details) ->
-        chai.expect(err).to.be.a 'object'
-        chai.expect(err.message).to.contain 'TIMEOUT'
-        done()
-
   describe 'filter returning no solution and no error', ->
     it 'should fail and return error', (done) ->
       filter = local 'return-nothing'
@@ -154,21 +143,6 @@ describe 'Runner', ->
         chai.expect(err).to.be.an 'object'
         chai.expect(err.message).to.contain 'function'
         chai.expect(err.message).to.contain 'line'
-        done()
-
-  describe 'filter with infinite loop', ->
-    it 'should timeout and return error', (done) ->
-      @timeout 9000
-      filter = local 'infinite-loop'
-      page = ""
-      options = {}
-      solver.runJob filter, page, options, (err, solution, details) ->
-        chai.expect(solution).to.not.exist
-        chai.expect(err).to.be.a 'object'
-        chai.expect(err.message).to.include 'hard timeout'
-        chai.expect(err.message).to.include 'logged before infinite loop'
-        chai.expect(err.message).to.include 'poly: starting'
-        chai.expect(err.stack, 'stack should not duplicate message').to.not.include 'poly: starting'
         done()
 
   describe 'passing options to filter', ->
@@ -273,3 +247,28 @@ describe 'Runner', ->
         chai.expect(details.screenshots).to.eql {}
         done()
 
+  describe 'filter never returning data', ->
+    it 'should fail after timeout', (done) ->
+      @timeout 4000
+      filter = local 'never-returning'
+      page = ""
+      options = {}
+      solver.runJob filter, page, options, (err, solution, details) ->
+        chai.expect(err).to.be.a 'object'
+        chai.expect(err.message).to.contain 'TIMEOUT'
+        done()
+
+  describe 'filter with infinite loop', ->
+    it 'should timeout and return error', (done) ->
+      @timeout 9000
+      filter = local 'infinite-loop'
+      page = ""
+      options = {}
+      solver.runJob filter, page, options, (err, solution, details) ->
+        chai.expect(solution).to.not.exist
+        chai.expect(err).to.be.a 'object'
+        chai.expect(err.message).to.include 'hard timeout'
+        chai.expect(err.message).to.include 'logged before infinite loop'
+        chai.expect(err.message).to.include 'poly: starting'
+        chai.expect(err.stack, 'stack should not duplicate message').to.not.include 'poly: starting'
+        done()
