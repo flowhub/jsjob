@@ -1,4 +1,4 @@
-window.polySolvePage = function(page, options, callback) {
+window.jsJobRun = function(page, options, callback) {
 
   var element = document.createElement('div');
   element.innerHTML = '<p>Some text to be screenshotted</p>';

@@ -1,4 +1,4 @@
 
-window.polySolvePage = function(page, options, callback) {
+window.jsJobRun = function(page, options, callback) {
     // never returning
 };

@@ -1,5 +1,5 @@
 
-window.polySolvePage = function(page, options, callback) {
+window.jsJobRun = function(page, options, callback) {
     setTimeout(function() {
         callback(null, "throw-then-callback solution", null);
     }, 0);

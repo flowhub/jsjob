@@ -1,5 +1,5 @@
 
-window.polySolvePage = function(page, options, callback) {
+window.jsJobRun = function(page, options, callback) {
     var html = "<html></html>";
     var details = {
         options: options

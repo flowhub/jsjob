@@ -33,26 +33,29 @@ describe 'Runner', ->
     it 'should fail and return error', (done) ->
       filter = local '--non-existing--'
       page = ""
-      solver.solvePage filter, page, (err, solution, details) ->
+      options = {}
+      solver.runJob filter, page, options, (err, solution, details) ->
         chai.expect(err).to.be.a 'object'
-        chai.expect(err.message).to.contain 'window.polySolvePage'
+        chai.expect(err.message).to.contain 'window.jsJobRun'
         done()
 
-  describe 'filter without window.polySolvePage', ->
+  describe 'filter without window.jsJobRun', ->
     @timeout 4000 # TODO: fail faster?
     it 'should fail', (done) ->
       filter = local 'no-entrypoint'
       page = ""
-      solver.solvePage filter, page, (err, solution, details) ->
+      options = {}
+      solver.runJob filter, page, options, (err, solution, details) ->
         chai.expect(err).to.be.a 'object'
-        chai.expect(err.message).to.contain 'window.polySolvePage'
+        chai.expect(err.message).to.contain 'window.jsJobRun'
         done()
 
   describe 'filter returning error', ->
     it 'should fail and return the error', (done) ->
       filter = local 'return-error'
       page = ""
-      solver.solvePage filter, page, (err, solution, details) ->
+      options = {}
+      solver.runJob filter, page, options, (err, solution, details) ->
         chai.expect(err).to.be.a 'object'
         chai.expect(err.message).to.contain 'this is my error'
         done()
@@ -61,7 +64,8 @@ describe 'Runner', ->
     it 'should fail and return the error with stacktrace', (done) ->
       filter = local 'return-thrown-error'
       page = ""
-      solver.solvePage filter, page, (err, solution, details) ->
+      options = {}
+      solver.runJob filter, page, options, (err, solution, details) ->
         chai.expect(err).to.be.a 'object'
         chai.expect(err.message).to.contain 'this error was thrown'
         chai.expect(err.stack).to.contain 'mythrowingfunction'
@@ -73,7 +77,8 @@ describe 'Runner', ->
       @timeout 4000
       filter = local 'never-returning'
       page = ""
-      solver.solvePage filter, page, (err, solution, details) ->
+      options = {}
+      solver.runJob filter, page, options, (err, solution, details) ->
         chai.expect(err).to.be.a 'object'
         chai.expect(err.message).to.contain 'TIMEOUT'
         done()
@@ -82,7 +87,8 @@ describe 'Runner', ->
     it 'should fail and return error', (done) ->
       filter = local 'return-nothing'
       page = ""
-      solver.solvePage filter, page, (err, solution, details) ->
+      options = {}
+      solver.runJob filter, page, options, (err, solution, details) ->
         chai.expect(solution).to.not.exist
         chai.expect(err).to.be.a 'object'
         chai.expect(err.message).to.contain 'solution nor error'
@@ -92,17 +98,19 @@ describe 'Runner', ->
     it 'should succeed and ignore everything but first data', (done) ->
       filter = local 'return-multiple'
       page = ""
-      solver.solvePage filter, page, (err, solution, details) ->
+      options = {}
+      solver.runJob filter, page, options, (err, solution, details) ->
         chai.expect(err).to.not.exist
         chai.expect(solution).to.equal 'my first data 1'
         done()
 
-  describe 'filter throwing exception in polySolvePage', ->
+  describe 'filter throwing exception in jsJobRun', ->
     it 'should fail and return error', (done) ->
       @timeout 4000 # TODO: fail faster?
       filter = local 'throw-directly'
       page = ""
-      solver.solvePage filter, page, (err, solution, details) ->
+      options = {}
+      solver.runJob filter, page, options, (err, solution, details) ->
         chai.expect(solution).to.not.exist
         chai.expect(err).to.be.an 'object'
         chai.expect(err.message).to.contain 'thrown in polySolvePage'
@@ -113,7 +121,8 @@ describe 'Runner', ->
       @timeout 4000 # TODO: fail faster?
       filter = local 'throw-indirectly'
       page = ""
-      solver.solvePage filter, page, (err, solution, details) ->
+      options = {}
+      solver.runJob filter, page, options, (err, solution, details) ->
         chai.expect(solution).to.not.exist
         chai.expect(err).to.be.an 'object'
         chai.expect(err.message).to.contain 'thrown in a setTimeout'
@@ -126,7 +135,8 @@ describe 'Runner', ->
     it 'should fail and return error with stacktrace', (done) ->
       filter = local 'callback-then-throw'
       page = ""
-      solver.solvePage filter, page, (err, solution, details) ->
+      options = {}
+      solver.runJob filter, page, options, (err, solution, details) ->
         chai.expect(solution).to.not.exist
         chai.expect(err).to.be.an 'object'
         chai.expect(err.message).to.contain 'function'
@@ -137,7 +147,8 @@ describe 'Runner', ->
     it 'should fail and return error with stacktrace', (done) ->
       filter = local 'throw-then-callback'
       page = ""
-      solver.solvePage filter, page, (err, solution, details) ->
+      options = {}
+      solver.runJob filter, page, options, (err, solution, details) ->
         chai.expect(solution).to.not.exist
         chai.expect(err).to.be.an 'object'
         chai.expect(err.message).to.contain 'function'
@@ -149,7 +160,8 @@ describe 'Runner', ->
       @timeout 9000
       filter = local 'infinite-loop'
       page = ""
-      solver.solvePage filter, page, (err, solution, details) ->
+      options = {}
+      solver.runJob filter, page, options, (err, solution, details) ->
         chai.expect(solution).to.not.exist
         chai.expect(err).to.be.a 'object'
         chai.expect(err.message).to.include 'hard timeout'
@@ -169,7 +181,7 @@ describe 'Runner', ->
       options =
         foo: 'foofoo'
         bar: 'barbaz'
-      solver.solvePage filter, page, options, (err, solution, details) ->
+      solver.runJob filter, page, options, (err, solution, details) ->
         chai.expect(err).to.be.a 'null'
         chai.expect(solution).to.be.a 'string'
         chai.expect(details.options).to.eql options
@@ -179,7 +191,8 @@ describe 'Runner', ->
     it 'should be returned so it can be stored', (done) ->
       filter = local 'details-images'
       page = ""
-      solver.solvePage filter, page, (err, solution, details) ->
+      options = {}
+      solver.runJob filter, page, options, (err, solution, details) ->
         chai.expect(err).to.not.exist
         chai.expect(solution).to.be.a 'string'
         chai.expect(details).to.include.keys 'images'
@@ -190,10 +203,11 @@ describe 'Runner', ->
 
   describe 'accessing a URL that fails to load', ->
     details = null
-    it 'should return error from polySolvePage()', (done) ->
+    it 'should return error from jsJobRun()', (done) ->
       filter = local 'script-load-error'
       page = ""
-      solver.solvePage filter, page, (err, solution, d) ->
+      options = {}
+      solver.runJob filter, page, options, (err, solution, d) ->
         details = d
         chai.expect(err).to.exist
         chai.expect(err.message).to.include 'script load error'
@@ -213,7 +227,7 @@ describe 'Runner', ->
         allowedResources: [
           'http://ajax.googleapis.com'
         ]
-      solver.solvePage filter, page, options, (err, solution, d) ->
+      solver.runJob filter, page, options, (err, solution, d) ->
         details = d
         chai.expect(err).to.exist
         chai.expect(err.message).to.include 'Failed to load script'
@@ -234,7 +248,8 @@ describe 'Runner', ->
       @timeout 4000
       filter = local 'take-screenshots'
       page = {}
-      solver.solvePage filter, page, (err, solution, d) ->
+      options = {}
+      solver.runJob filter, page, options, (err, solution, d) ->
         details = d
         chai.expect(err).to.not.exist
         chai.expect(details.screenshots).to.have.keys ['myname']
@@ -250,7 +265,8 @@ describe 'Runner', ->
       @timeout 4000
       filter = local 'take-screenshots'
       page = {}
-      solver.solvePage filter, page, (err, solution, d) ->
+      options = {}
+      solver.runJob filter, page, options, (err, solution, d) ->
         details = d
         chai.expect(err).to.not.exist
         chai.expect(details.screenshots).to.eql {}

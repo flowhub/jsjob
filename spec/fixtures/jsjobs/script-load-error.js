@@ -1,4 +1,4 @@
-window.polySolvePage = function(page, options, callback) {
+window.jsJobRun = function(page, options, callback) {
     var url = 'http://api.thegrid.io/non-existant.js';
 
     var script = document.createElement("script");

@@ -3,7 +3,7 @@ function mythrowingfunction() {
    throw new Error('this error was thrown');
 }
 
-window.polySolvePage = function(page, options, callback) {
+window.jsJobRun = function(page, options, callback) {
 
     try {
         mythrowingfunction();
