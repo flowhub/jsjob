@@ -1,27 +1,33 @@
 {
-  "name": "rtrt",
+  "name": "jsjob",
   "version": "0.0.1",
-  "description": "",
+  "description": "Run arbitrary JavaScript as jobs in a browser sandbox",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --compilers coffee:coffee-script/register spec/*.coffee"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/jonnor/rtrt.git"
+    "url": "git+ssh://git@github.com/the-grid/jsjob.git"
   },
   "keywords": [
-    "FBP",
-    "dataflow",
     "javascript",
-    "msgflo",
-    "noflo",
+    "headless",
+    "worker",
+    "plugin",
     "phanthomjs"
   ],
   "author": "Jon Nordby <jononor@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jonnor/rtrt/issues"
+    "url": "https://github.com/the-grid/jsjob/issues"
   },
-  "homepage": "https://github.com/jonnor/rtrt#readme"
+  "homepage": "https://github.com/the-grid/jsjob#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
+  },
+  "dependencies": {
+    "coffee-script": "^1.10.0"
+  }
 }
