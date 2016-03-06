@@ -13,6 +13,7 @@ describe 'Runner', ->
     timeout: null # set in beforeEach
     hardtimeout: null # set in beforeEach
     verbose: false
+    detailsLog: true
 
   before (done) ->
     solver = new jsjob.Runner solveroptions
