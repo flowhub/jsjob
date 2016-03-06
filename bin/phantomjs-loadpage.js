@@ -47,7 +47,7 @@ var takeScreenshot = function(name) {
   screenshot = 'data:image/png;charset=utf-8;base64,'+screenshot;
   // send the data into node.js by going via JS and over HTTP
   page.evaluate(function(data, n) {
-    window.polyEvent('screenshot', { name: n, data: data });
+    window.jsJobEvent('screenshot', { name: n, data: data });
   }, screenshot, name);
 };
 

@@ -62,7 +62,7 @@ polyFillFunctionBind = """
 generateHtml = (filter, page, options) ->
 
   library = """
-  window.polyEvent = function(id, payload) {
+  window.jsJobEvent = function(id, payload) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', window.location.href+'/event', true);
     xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
