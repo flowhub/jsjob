@@ -44,6 +44,7 @@ A JsJob needs to implement a single function, `window.jsJobRun`:
       var inputData = {'bar': "baz"};
       var jobOptions = {};
       runner.runJob(pluginUrl, inputData, jobOptions, function(err, result, details) {
+        console.log('jsjob returned', err, result, details);
 
         runner.stop(function(err) { }); // one can have many runJob() calls for a single runner
       });
