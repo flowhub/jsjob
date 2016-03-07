@@ -75,15 +75,23 @@ For an up-to-date list, use `jsjob-run --help`
 
 ## Developing
 
-Get the code
+### Get the code
 
     git clone git@github.com:the-grid/jsjob.git
 
-Run [the tests](./spec)
+### Run [the tests](./spec)
 
     npm test
 
-Make release
+### File an issue
+
+Check [existing list](https://github.com/the-grid/jsjob/issues) first.
+
+### Make a pull request
+
+Fork and [submit on Github](https://github.com/the-grid/jsjob/pulls)
+
+### Make a release
 
     # change version in package.json
     git tag 1.x.y
