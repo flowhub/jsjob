@@ -69,6 +69,7 @@ exports.main = main = () ->
   runJob options, (err, results, details) ->
     if err
       console.error err
+      console.error err.stack if err.stack
       process.exit 1
     
     out = JSON.stringify results, null, 2
