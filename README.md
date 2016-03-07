@@ -52,22 +52,24 @@ A JsJob needs to implement a single function, `window.jsJobRun`:
 
 ### Run as script
 
-  echo '{"input": "sss"}' | jsjob-run http:/localhost:8001/spec/fixtures/jsjobs/return-input.js
-  # execute the .js file, and writes result (or error) to console
-  {"input": "sss"}
+Basic example
 
-Supported options include:
+    echo '{"input": "sss"}' | jsjob-run http:/localhost:8001/spec/fixtures/jsjobs/return-input.js
+    # execute the .js file, and writes result (or error) to console
+    {"input": "sss"}
 
-  Usage: jsjob-run [options] <job.js>
+Supported options
 
-  Options:
+    Usage: jsjob-run [options] <job.js>
 
-    -h, --help           output usage information
-    --port <portnumber>  Port to use for Runner HTTP server
-    --timeout <seconds>  Number of seconds to limit job to
-    --verbose [enable]   Verbose, logs console of job execution
-    --joboptions <json>  Options to provide the job, as second argument of jsJobRun()
-    --script <code>      JavaScript code injected before jsjob.js. Used for polyfills or API adapters
+    Options:
+
+      -h, --help           output usage information
+      --port <portnumber>  Port to use for Runner HTTP server
+      --timeout <seconds>  Number of seconds to limit job to
+      --verbose [enable]   Verbose, logs console of job execution
+      --joboptions <json>  Options to provide the job, as second argument of jsJobRun()
+      --script <code>      JavaScript code injected before jsjob.js. Used for polyfills or API adapters
 
 For an up-to-date list, use `jsjob-run --help`
 
