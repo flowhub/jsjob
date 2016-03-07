@@ -71,6 +71,8 @@ exports.main = main = () ->
       console.error err
       process.exit 1
     
-    console.log results
+    out = JSON.stringify results, null, 2
+    console.log out
+    process.exit 0
 
 main() if not module.parent
