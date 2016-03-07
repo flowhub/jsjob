@@ -10,8 +10,10 @@ allowing 3rd party 'plugins' in a cloud service.
 [MIT](./LICENSE.md)
 
 ## Status
-**Version 1.x in progress**
+**In production**
 
+* PhantomJS 2 (recommended) and PhantomJS supported
+* Code used in production at [The Grid](http://thegrid.io) since March 2015
 
 ## Installing
 
