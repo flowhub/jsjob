@@ -30,7 +30,11 @@ module.exports = ->
         options:
           port: 8001
 
+    exec:
+     sudoku: './node_modules/.bin/webpack examples/sudoku.js dist/examples/sudoku.js'
+
   # Grunt plugins used for building
+  @loadNpmTasks 'grunt-exec'
 
   # Grunt plugins used for testing
   @loadNpmTasks 'grunt-mocha-test'
