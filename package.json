@@ -41,7 +41,8 @@
   "dependencies": {
     "coffee-script": "^1.10.0",
     "commander": "^2.9.0",
-    "debug": "^2.2.0"
+    "debug": "^2.2.0",
+    "uuid": "^2.0.1"
   },
   "bin": {
     "jsjob-run": "./bin/jsjob-run"

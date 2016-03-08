@@ -3,6 +3,7 @@ http = require 'http'
 url = require 'url'
 child_process = require 'child_process'
 path = require 'path'
+uuid = require 'uuid'
 
 debug = require('debug')('jsjob:runner')
 
@@ -102,8 +103,7 @@ deserializeError = (object) ->
 class Runner
   constructor: (@options={}) ->
     @server = null
-    @jobs = {}
-    @jobId = 1
+    @jobs = {} # UUID string -> Job {}
 
     debug 'constructor', @options
 
@@ -136,7 +136,7 @@ class Runner
     processOptions.allowedResources = jobOptions.allowedResources
     p = new PhantomProcess processOptions
     job =
-      id: @jobId++
+      id: uuid.v4()
       process: p
       filter: codeUrl
       page: inputData
@@ -165,11 +165,11 @@ class Runner
     if paths.length == 3
       # GET /solve/$jobId
       # POST /solve/$jobId
-      jobId = parseInt paths[2]
+      jobId = paths[2]
       return @handleSolveRequest jobId, request, response
     else if paths.length == 4
       # POST /solve/$jobid/event
-      jobId = parseInt paths[2]
+      jobId = paths[2]
       if paths[3] == 'event'
         return @handleEventRequest jobId, request, response
       else
