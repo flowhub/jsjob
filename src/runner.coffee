@@ -11,6 +11,8 @@ try
 catch e
   debug 'Could not load PhantomJS 1', e
 
+clone = (obj) ->
+  return JSON.parse JSON.stringify obj
 
 htmlEscape = (html) ->
   return String(html)
@@ -130,8 +132,9 @@ class Runner
     debug 'running job', codeUrl, typeof inputData, typeof jobOptions
 
     jobOptions.scripts = @options.scripts if not jobOptions.scripts
-    @options.allowedResources = jobOptions.allowedResources
-    p = new PhantomProcess @options
+    processOptions = clone @options
+    processOptions.allowedResources = jobOptions.allowedResources
+    p = new PhantomProcess processOptions
     job =
       id: @jobId++
       process: p
