@@ -1,4 +1,7 @@
 module.exports = ->
+  pkg = @file.readJSON 'package.json'
+  repo = pkg.repository.url.replace 'git://', 'https://'+process.env.GH_TOKEN+'@'
+
   # Project configuration
   @initConfig
     pkg: @file.readJSON 'package.json'
@@ -33,6 +36,18 @@ module.exports = ->
     exec:
      sudoku: './node_modules/.bin/webpack examples/sudoku.js dist/examples/sudoku.js'
 
+    'gh-pages':
+      options:
+        base: 'dist'
+        clone: 'gh-pages'
+        message: 'Deploying dist/ to gh-pages'
+        repo: repo
+        user:
+          name: 'JsJob bot'
+          email: 'bot@thegrid.io'
+        silent: true
+      src: '**/*'
+
   # Grunt plugins used for building
   @loadNpmTasks 'grunt-exec'
 
@@ -40,6 +55,9 @@ module.exports = ->
   @loadNpmTasks 'grunt-mocha-test'
   @loadNpmTasks 'grunt-coffeelint'
   @loadNpmTasks 'grunt-contrib-connect'
+
+  # Grunt plugins used for deploying
+  @loadNpmTasks 'grunt-gh-pages'
 
   # Our local tasks
   @registerTask 'test', 'Build and run automated tests', (target = 'all') =>
