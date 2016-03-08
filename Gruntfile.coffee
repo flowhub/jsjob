@@ -60,7 +60,10 @@ module.exports = ->
   @loadNpmTasks 'grunt-gh-pages'
 
   # Our local tasks
+  @registerTask 'build', ['exec']
+
   @registerTask 'test', 'Build and run automated tests', (target = 'all') =>
+    @task.run 'build'
     @task.run 'coffeelint'
     @task.run 'connect'
     @task.run 'mochaTest'
