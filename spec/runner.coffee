@@ -3,6 +3,7 @@ jsjob = require '..'
 chai = require 'chai' if not chai
 fs = require 'fs'
 path = require 'path'
+Promise = require 'bluebird'
 
 local = (name) ->
   return "http://localhost:8001/spec/fixtures/jsjobs/#{name}.js"
@@ -256,6 +257,32 @@ describe 'Runner', ->
         details = d
         chai.expect(err).to.not.exist
         chai.expect(details.screenshots).to.eql {}
+        done()
+
+  describe 'many jsjobs concurrencly', ->
+    it 'should return correct data for each', (done) ->
+      @timeout 9000
+      doJob = Promise.promisify (id, index, total, callback) ->
+        url = local 'return-input'
+        input =
+          common: 'data-ABC'
+          unique: "request-#{id}"
+        options = {}
+        solver.runJob url, input, options, (err, out, details) ->
+          return callback err, out
+
+      requests = [11, 22, 33, 44, 55]
+      Promise.map(requests, doJob, {concurrency: 10}).nodeify (err, results) ->
+        return done err if err
+
+        commons = results.map (r) -> r.common
+        expectCommons = results.map (r) -> 'data-ABC'
+        chai.expect(commons).to.eql expectCommons
+
+        uniques = results.map (r) -> r.unique
+        expectUniques = requests.map (i) -> "request-#{i}"
+        chai.expect(uniques).to.eql expectUniques
+
         done()
 
   describe 'filter never returning data', ->

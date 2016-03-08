@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/the-grid/jsjob#readme",
   "devDependencies": {
+    "bluebird": "^3.3.4",
     "chai": "^1.10.0",
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
