@@ -56,9 +56,15 @@ Alternatively, get PhantomJS 1.x from NPM
 
     npm install --save phantomjs
 
-## Examples
+## [Examples](./examples)
 
-`TODO`
+### Sudoku solver
+
+[Solver code](./examples/sudoku.coffee) |
+[JsJob plugin](./examples/sudoku.js) |
+[Input format](http://www2.warwick.ac.uk/fac/sci/moac/people/students/peter_cock/python/sudoku/)
+
+    echo '{"board":".94...13..............76..2.8..1.....32.........2...6.....5.4.......8..7..63.4..8"}' | jsjob-run http://the-grid.github.io/jsjob/examples/sudoku.js
 
 ## Usage
 
