@@ -29,6 +29,17 @@ describe 'Runner', ->
     solveroptions.hardtimeout = 8000
     solveroptions.timeout = 3500
 
+  describe 'passthrough jsjob', ->
+    @timeout 4000
+    it 'should succeed and return input', (done) ->
+      filter = local 'return-input'
+      input = { 'foo': 'barbaz', 'hello': 'world' }
+      options = {}
+      solver.runJob filter, input, options, (err, solution, details) ->
+        chai.expect(err).to.not.exist
+        chai.expect(solution).to.eql input
+        done()
+
   describe 'filter URL which gives 404', ->
     @timeout 4000 # TODO: fail faster?
     it 'should fail and return error', (done) ->
