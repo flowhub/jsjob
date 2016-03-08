@@ -30,7 +30,8 @@
     "grunt-coffeelint": "0.0.15",
     "grunt-contrib-connect": "^1.0.0",
     "grunt-mocha-test": "^0.12.7",
-    "mocha": "^2.4.5"
+    "mocha": "^2.4.5",
+    "slimerjs": "^0.906.1"
   },
   "dependencies": {
     "coffee-script": "^1.10.0",
