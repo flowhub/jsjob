@@ -14,6 +14,7 @@ describe 'Runner', ->
     hardtimeout: null # set in beforeEach
     verbose: false
     detailsLog: true
+    phantomjs: './node_modules/.bin/slimerjs'
 
   before (done) ->
     solver = new jsjob.Runner solveroptions
