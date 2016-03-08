@@ -17,8 +17,10 @@ jsJobRun = (url, input, callback) ->
   child.stdin.end input, 'utf8' 
   return child
 
+module.exports.jsJobRun = jsJobRun
+
+testserver = 'http://localhost:8001'
 fixture = (name) ->
-  testserver = 'http://localhost:8001'
   return path.join testserver, 'spec/fixtures/jsjobs', name
 
 cliTimeout = 4000
