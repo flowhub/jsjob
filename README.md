@@ -36,7 +36,7 @@ Possibility of allowing 3rd-party extensions.
 ## Related projects
 
 * [noflo-jsjob](https://github.com/noflo/noflo-jsjob) makes it easy to use JsJob in [NoFlo](http://) applications,
-and to create distributed workers when combined with [noflo-msgflo](http://github.com/noflo/noflo-runtime-msgflo).
+and create distributed workers over AMQP/RabbitMQ or MQTT when combined with [noflo-msgflo](http://github.com/noflo/noflo-runtime-msgflo).
 * [jsjob-ethereum](https://github.com/the-grid/jsjob-ethereum) is an experiement for a decentralized
 computation market using the [Ethereum](https://www.ethereum.org/) blockchain.
 * ... Let us know about your project, and we'll link it here!
