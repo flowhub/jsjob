@@ -285,6 +285,34 @@ describe 'Runner', ->
 
         done()
 
+  describe 'using scripts as API adapter', ->
+    details = null
+    hidden = 'not visible to the inner function'
+    it 'should return results', (done) ->
+      url = local 'foreign-polysolvepage'
+      input = { 'body': 'something' }
+      options =
+        scripts: [
+          """
+          window.jsJobRun = function(input, options, callback) {
+            var hidden = options._hidden;
+            options._hidden = undefined;
+            window.polySolvePage(input, options, function(err, out, det) {
+              det._hidden = hidden;
+              return callback(err, out, det);
+            });
+          };
+          """
+          ]
+        _hidden: hidden
+      solver.runJob url, input, options, (err, output, d) ->
+        details = d
+        chai.expect(err).to.not.exist
+        chai.expect(output).to.include "<html>something</html>"
+        done()
+    it 'should pass through information', ->
+      chai.expect(details._hidden).to.eql hidden
+
   describe 'filter never returning data', ->
     it 'should fail after timeout', (done) ->
       @timeout 4000
