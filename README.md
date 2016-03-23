@@ -35,7 +35,7 @@ Possibility of allowing 3rd-party extensions.
 
 ## Related projects
 
-* [noflo-jsjob](https://github.com/noflo/noflo-jsjob) makes it easy to use JsJob in [NoFlo](http://) applications,
+* [noflo-jsjob](https://github.com/noflo/noflo-jsjob) makes it easy to use JsJob in [NoFlo](http://noflojs.org/) applications,
 and create distributed workers over AMQP/RabbitMQ or MQTT when combined with [noflo-msgflo](http://github.com/noflo/noflo-runtime-msgflo).
 * [jsjob-ethereum](https://github.com/the-grid/jsjob-ethereum) is an experiement for a decentralized
 computation market using the [Ethereum](https://www.ethereum.org/) blockchain.
@@ -64,7 +64,7 @@ Alternatively, get PhantomJS 1.x from NPM
 [JsJob plugin](./examples/sudoku.js) |
 [Input format](http://www2.warwick.ac.uk/fac/sci/moac/people/students/peter_cock/python/sudoku/)
 
-    echo '{"board":".94...13..............76..2.8..1.....32.........2...6.....5.4.......8..7..63.4..8"}' | jsjob-run http://the-grid.github.io/jsjob/examples/sudoku.js
+    echo '{"board":".94...13..............76..2.8..1.....32.........2...6.....5.4.......8..7..63.4..8"}' | jsjob-run https://the-grid.github.io/jsjob/examples/sudoku.js
 
 ## Usage
 
@@ -97,7 +97,7 @@ When deploying to a public server, use SSL/HTTPS!
     var runner = new jsjob.Runner(options);
     runner.start(function(err) {
 
-      var pluginUrl = 'http://example.net/myjsjob.js'; // Something implementing JsJob API
+      var pluginUrl = 'https://example.net/myjsjob.js'; // Something implementing JsJob API
       var inputData = {'bar': "baz"};
       var jobOptions = {};
       runner.runJob(pluginUrl, inputData, jobOptions, function(err, result, details) {
