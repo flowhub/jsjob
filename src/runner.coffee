@@ -38,7 +38,12 @@ generateHtml = (filter, page, options) ->
   console.log('runner script load');
   var serializeError = function(err) {
     if (!err) { return null; }
-    return { 'message': err.message, 'stack': err.stack };
+    var obj = { 'message': err.message, 'stack': err.stack };
+    // copy custom properties
+    for (var key in err) {
+        obj[key] = err[key];
+    }
+    return obj;
   };
   var sendResponse = function(err, solution, details) {
     var xhr = new XMLHttpRequest();
@@ -94,6 +99,9 @@ deserializeError = (object) ->
   if object.message
     err = new Error object.message if object.message
     err.stack = object.stack if object.stack
+    # copy custom properties
+    for k, v of object
+      err[k] = v
     return err
 
   return new Error "ExternalSolver: Unknown error returned from phantomjs: #{JSON.stringify(object)}"

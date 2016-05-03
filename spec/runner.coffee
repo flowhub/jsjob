@@ -157,6 +157,19 @@ describe 'Runner', ->
         chai.expect(err.message).to.contain 'line'
         done()
 
+  describe 'filter returning error with custom properties', ->
+    it 'should fail and return the error including properties', (done) ->
+      filter = local 'return-custom-error'
+      page = ""
+      options = {}
+      solver.runJob filter, page, options, (err, solution, details) ->
+        chai.expect(err).to.be.a 'object'
+        chai.expect(err.message).to.contain 'custom error'
+        chai.expect(err).to.include.keys ['myproperty', 'otherproperty']
+        chai.expect(err.myproperty).to.equal 'myvalue'
+        chai.expect(err.otherproperty).to.equal 'othervalue'
+        done()
+
   describe 'passing options to filter', ->
     it 'should able to roundtrip back through details', (done) ->
       filter = local 'pass-options-in-details'
