@@ -8,6 +8,31 @@ Promise = require 'bluebird'
 local = (name) ->
   return "http://localhost:8001/spec/fixtures/jsjobs/#{name}.js"
 
+runJobs = (runner, inputs, options, callback) ->
+  runKey = (key, idx, length, cb) ->
+    data = inputs[key]
+    runner.runJob data.url, data.payload, options, (err, res, details) ->
+      r =
+        error: err
+        result: res
+        details: details
+        key: key
+      return cb null, r # don't bail out on errors, just capture it all
+    return null
+
+  keys = Object.keys inputs
+  mapOptions = {}
+
+  Promise.map(keys, Promise.promisify(runKey), mapOptions)
+    .then (array) ->
+      obj = {}
+      for item in array
+        k = item.key
+        delete item.key
+        obj[k] = item
+      return obj
+    .nodeify callback
+
 describe 'Runner', ->
   solver = null
   solveroptions =
@@ -350,4 +375,53 @@ describe 'Runner', ->
         chai.expect(err.message).to.include 'logged before infinite loop'
         chai.expect(err.message).to.include 'poly: starting'
         chai.expect(err.stack, 'stack should not duplicate message').to.not.include 'poly: starting'
+        done()
+
+  describe 'several jobs concurrently', ->
+    it 'each job should return correct result', (done) ->
+      @timeout 9000
+      options = {}
+      jobs = 
+        returnerror:
+          url: local 'return-error'
+          payload: null
+          expect:
+            error: 'this is my error'
+        timeout:
+          url: local 'infinite-loop'
+          payload: null
+          expect:
+            error: 'hard timeout'
+        successA:
+          url: local 'return-input'
+          payload: { 'success': 'A' }
+          expect:
+            result: { 'success': 'A' }
+        throwerror:
+          url: local 'return-thrown-error'
+          payload: null
+          expect:
+            error: 'this error was thrown'
+        successB:
+          url: local 'return-input'
+          payload: { 'success': 'B' }
+          expect:
+            result: { 'success': 'B' }
+
+      runJobs solver, jobs, options, (err, results) ->
+        chai.expect(err).to.not.exist
+        jobNames = Object.keys jobs
+        resultNames = Object.keys results
+        chai.expect(resultNames).to.eql jobNames
+
+        for jobname, result of results
+          expect = jobs[jobname].expect
+          chai.expect(expect, "missing expect for job #{jobname}").to.exist
+
+          if expect.error
+            chai.expect(result.error, "job '#{jobname}' should have error").to.exist
+            chai.expect(result.error.message, "job '#{jobname}' error").to.contain expect.error
+          if expect.result
+            chai.expect(result.result, "job '#{jobname}' results").to.eql expect.result
+
         done()
