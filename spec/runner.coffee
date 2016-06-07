@@ -21,7 +21,8 @@ runJobs = (runner, inputs, options, callback) ->
     return null
 
   keys = Object.keys inputs
-  mapOptions = {}
+  mapOptions =
+    concurrency: Infinity
 
   Promise.map(keys, Promise.promisify(runKey), mapOptions)
     .then (array) ->
