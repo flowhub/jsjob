@@ -75,5 +75,3 @@ exports.main = main = () ->
     out = JSON.stringify results, null, 2
     console.log out
     process.exit 0
-
-main() if not module.parent
