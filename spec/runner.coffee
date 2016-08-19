@@ -460,3 +460,40 @@ describe 'Runner', ->
         chai.expect(p.child).to.exist
         p.child.kill 'SIGTERM'
 
+
+describe 'Runner.stop() with in-flight jobs', ->
+  solver = null
+  solveroptions =
+    timeout: null # set in beforeEach
+    hardtimeout: null # set in beforeEach
+    verbose: false
+    detailsLog: true
+  stopErr = new Error 'init'
+
+  before (done) ->
+    solver = new jsjob.Runner solveroptions
+    solver.start (err) ->
+      chai.expect(err).to.be.a 'undefined'
+      done()
+  after (done) ->
+    done()
+
+  it 'should return cancellation Error for job', (done) ->
+    filter = local 'return-delayed'
+    page =
+      delay: 1300
+      foo: 'somedata3'
+    options = {}
+    solver.runJob filter, page, options, (err, outdata, details) ->
+      chai.expect(outdata).to.not.exist
+      chai.expect(err).to.be.a 'object'
+      chai.expect(err.message).to.include 'JsJob cancelled due to Runner.stop()'
+      chai.expect(err.type).to.equal "cancelled" # so apps can detect this kind of error and ignore it, as likely they intended to do stop()
+      done()
+    wait 100, () ->
+      solver.stop (err) ->
+        stopErr = err
+
+  it 'should not have errored on stop()', ->
+    chai.expect(stopErr).to.not.exist
+
