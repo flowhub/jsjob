@@ -161,6 +161,7 @@ class Runner
         details.stdout = p.stdout
         details.stderr = p.stderr
       details.screenshots = job.screenshots
+      delete @jobs[job.id]
       return callback err, sol, details if err
       return callback job.error, sol, details
     @jobs[job.id] = job
@@ -211,7 +212,6 @@ class Runner
         err = new Error 'Neither solution nor error was provided' if not (out.error or out.solution)
         job.error = err
         job.process.stop()
-        delete @jobs[job.id]
         response.writeHead 204, {}
         response.end()
 
