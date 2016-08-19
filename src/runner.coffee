@@ -132,6 +132,10 @@ class Runner
 
   stop: (callback) ->
     debug 'stop', @options.port
+    for id, job of @jobs
+      cancelErr = new Error "JsJob cancelled due to Runner.stop()"
+      cancelErr.type = 'cancelled'
+      job.process.cancel cancelErr
     @server.close (err) =>
       debug 'stopped', @options.port
       return callback err if typeof callback == 'function'
@@ -253,6 +257,7 @@ class PhantomProcess
   constructor: (@options={}) ->
     @child = null
     @stopping = false
+    @cancelError = null
 
     @options.port = 8088 if not @options.port
     @options.port = parseInt @options.port if typeof @options.port == 'string'
@@ -321,6 +326,8 @@ class PhantomProcess
       else if not @stopping
         err = new Error "JsJob child process terminated unexpectedly #{code} #{signal}"
         callback err
+      else if @stopping and @cancelError
+        callback @cancelError
       else
         callback null, job.id
       callback = null
@@ -330,6 +337,10 @@ class PhantomProcess
   stop: () ->
     @stopping = true
     @child.kill()
+
+  cancel: (err) ->
+    @cancelError = err
+    @stop()
 
 module.exports = Runner
 
