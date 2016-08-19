@@ -443,6 +443,7 @@ describe 'Runner', ->
         delay: 900
         foo: 'somedata'
       options = {}
+      chai.expect(Object.keys(solver.jobs)).to.have.length 0
       solver.runJob filter, page, options, (err, outdata, details) ->
         chai.expect(outdata).to.not.exist
         chai.expect(err).to.be.a 'object'
@@ -453,7 +454,6 @@ describe 'Runner', ->
       # XXX: relies on internal/private details
       wait 100, () ->
         jobNames = Object.keys solver.jobs
-        console.log 'killing', testRunning, jobNames
         return if not testRunning
         chai.expect(jobNames).to.have.length 1
         p = solver.jobs[jobNames[0]].process
