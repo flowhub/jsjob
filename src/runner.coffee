@@ -252,6 +252,7 @@ phantomErrors =
 class PhantomProcess
   constructor: (@options={}) ->
     @child = null
+    @stopping = false
 
     @options.port = 8088 if not @options.port
     @options.port = parseInt @options.port if typeof @options.port == 'string'
@@ -285,6 +286,7 @@ class PhantomProcess
 
     onHardTimeout = () =>
       return if not callback # already returned
+      @stopping = true
       @child.kill 'SIGKILL'
       # should now fire exit handler
     setTimeout onHardTimeout, @options.hardtimeout
@@ -316,12 +318,17 @@ class PhantomProcess
         err = new Error "Hit hard timeout limit of #{@options.hardtimeout/1000} seconds:#{details}"
         err.stack = err.stack.replace(details, '...')
         callback err
+      else if not @stopping
+        err = new Error "JsJob child process terminated unexpectedly #{code} #{signal}"
+        callback err
       else
         callback null, job.id
       callback = null
+      @stopping = null
       return
 
   stop: () ->
+    @stopping = true
     @child.kill()
 
 module.exports = Runner
