@@ -64,7 +64,8 @@ generateHtml = (filter, page, options) ->
   var main = function() {
     console.log('poly: main start');
     var dataElement = document.getElementById("poly-input-data");
-    var data = JSON.parse(dataElement.innerHTML);
+    var json = dataElement.innerHTML.substring("<!--".length, dataElement.innerHTML.length-"-->".length);
+    var data = JSON.parse(json);
     console.log('poly: starting solving');
     window.jsJobRun(data.page, data.options, cb);
     console.log('poly: started');
@@ -84,7 +85,7 @@ generateHtml = (filter, page, options) ->
       #{scriptTags}
       <script>#{library}</script>
       <script src="#{filter}"></script>
-      <script id="poly-input-data" type="application/json">#{json}</script>
+      <script id="poly-input-data" type="application/json"><!--#{json}--></script>
     </head>
     <body>
       <script>#{script}</script>
