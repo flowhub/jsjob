@@ -1,6 +1,6 @@
 {
   "name": "jsjob",
-  "version": "0.10.6",
+  "version": "0.10.7",
   "description": "Run arbitrary JavaScript as jobs in a browser sandbox",
   "main": "index.js",
   "scripts": {
