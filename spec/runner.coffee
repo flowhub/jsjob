@@ -366,10 +366,30 @@ describe 'Runner', ->
         chai.expect(err.message).to.contain 'TIMEOUT'
         done()
 
-  describe 'input data containing </script>', ->
+  describe 'input data containing <script>...</script>', ->
     it 'should succeed', (done) ->
       filter = local 'return-input'
       input = { 'foo': 'barbaz', 'htmlscript': '<script>alert("Works!")</script>' }
+      options = {}
+      solver.runJob filter, input, options, (err, solution, details) ->
+        chai.expect(err).to.not.exist
+        chai.expect(solution).to.eql input
+        done()
+
+  describe 'input data containing </script>...<script>', ->
+    it 'should succeed', (done) ->
+      filter = local 'return-input'
+      input = { 'foo': 'barbaz', 'htmlbogusscript': '</script> <script>alert("Works!")</script> <script>' }
+      options = {}
+      solver.runJob filter, input, options, (err, solution, details) ->
+        chai.expect(err).to.not.exist
+        chai.expect(solution).to.eql input
+        done()
+
+  describe 'input data containing HTML comment', ->
+    it 'should succeed', (done) ->
+      filter = local 'return-input'
+      input = { 'foo': 'barbaz', 'htmlcomment': '<!-- FFOO -->' }
       options = {}
       solver.runJob filter, input, options, (err, solution, details) ->
         chai.expect(err).to.not.exist

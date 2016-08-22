@@ -22,7 +22,7 @@ htmlEscape = (html) ->
   .replace(/>/g, '&gt;')
   .replace(/"/g, '&quot;')
 
-generateHtml = (filter, page, options) ->
+generateHtml = (filter, options) ->
 
   library = """
   window.jsJobEvent = function(id, payload) {
@@ -45,6 +45,19 @@ generateHtml = (filter, page, options) ->
     }
     return obj;
   };
+  var getData = function(callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', window.location.href+'/data', false);
+    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            var json = xhr.responseText;
+            var data = JSON.parse(json);
+            return callback(null, data);
+        }
+    };
+    xhr.send();
+  };
   var sendResponse = function(err, solution, details) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', window.location.href, true);
@@ -63,19 +76,16 @@ generateHtml = (filter, page, options) ->
   };
   var main = function() {
     console.log('poly: main start');
-    var dataElement = document.getElementById("poly-input-data");
-    var json = dataElement.innerHTML.substring("<!--".length, dataElement.innerHTML.length-"-->".length);
-    var data = JSON.parse(json);
-    console.log('poly: starting solving');
-    window.jsJobRun(data.page, data.options, cb);
-    console.log('poly: started');
+
+    getData(function(err, data) {
+      console.log('poly: starting solving');
+      window.jsJobRun(data.input, data.options, cb);
+      console.log('poly: started');
+    });
   };
   window.onload = main;
 //  main();
   """
-
-  payload = { page: page, options: options }
-  json = JSON.stringify payload, null, 4
 
   scriptTags = ("<script>#{s}</script>" for s in options.scripts).join("\n")
   body = """<!DOCTYPE html>
@@ -85,7 +95,6 @@ generateHtml = (filter, page, options) ->
       #{scriptTags}
       <script>#{library}</script>
       <script src="#{filter}"></script>
-      <script id="poly-input-data" type="application/json"><!--#{json}--></script>
     </head>
     <body>
       <script>#{script}</script>
@@ -186,10 +195,24 @@ class Runner
       jobId = paths[2]
       if paths[3] == 'event'
         return @handleEventRequest jobId, request, response
+      else if paths[3] == 'data'
+        return @handleDataRequest jobId, request, response
       else
         return response.end()
     else
       return response.end()
+
+  handleDataRequest: (jobId, request, response) ->
+    console.log "#{request.method} #{jobId}" if @options.verbose
+    job = @jobs[jobId]
+    if not job
+      # multiple callbacks for same id, or wrong id
+      debug 'could not find solve job', jobId
+      return
+
+    response.writeHead 200, {"Content-Type": "application/json; charset=utf-8"}
+    body = JSON.stringify { input: job.page, options: job.options }
+    response.end body
 
   handleSolveRequest: (jobId, request, response) ->
     console.log "#{request.method} #{jobId}" if @options.verbose
@@ -200,9 +223,8 @@ class Runner
       return
 
     if request.method == 'GET'
-      # FIXME: make only for GET
       response.writeHead 200, {"Content-Type": "text/html; charset=utf-8"}
-      body = generateHtml job.filter, job.page, job.options
+      body = generateHtml job.filter, job.options
       response.end body
     else if request.method == 'POST'
       data = ""
