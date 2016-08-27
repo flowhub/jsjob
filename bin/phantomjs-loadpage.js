@@ -5,7 +5,7 @@ var page = require('webpage').create();
 /// Parse commandline options
 if (system.args.length === 1) {
   console.log('Usage: loadpage.js <some URL>');
-  phantom.exit(1);
+  phantom.exit(5);
 }
 var address = system.args[1];
 

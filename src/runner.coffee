@@ -270,10 +270,11 @@ class Runner
 
 # Mapping of exit code to error. Needs to match behavior of ../bin/phantomjs-loadpage.js
 phantomErrors =
-  1: 'Wrong arguments'
+  1: 'Unknown PhantomJS error'
   2: 'Failed to open solver page'
   3: 'Soft timeout'
   4: 'Uncaught JavaScript Error'
+  5: 'Wrong arguments to JsJob script'
 
 # TODO/PERF: use WebDriver mode and keep a long-running phantomjs instance
 class PhantomProcess
