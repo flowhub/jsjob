@@ -348,7 +348,7 @@ class PhantomProcess
         err.stack = err.stack.replace(details, '...')
         callback err
       else if not @stopping
-        err = new Error "JsJob child process terminated unexpectedly #{code} #{signal}"
+        err = new Error "JsJob child process terminated unexpectedly #{code} #{signal}:#{details}"
         callback err
       else if @stopping and @cancelError
         callback @cancelError
