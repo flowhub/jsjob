@@ -36,6 +36,7 @@
     "grunt-gh-pages": "^1.0.0",
     "grunt-mocha-test": "^0.12.7",
     "mocha": "^2.4.5",
+    "phantomjs-prebuilt": "^2.1.12",
     "webpack": "^1.12.14"
   },
   "dependencies": {
