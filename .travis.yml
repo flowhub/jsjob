@@ -4,6 +4,7 @@ node_js:
 before_script:
 - npm install -g grunt-cli
 - export JSJOB_BROWSER=`node -e "console.log(require('phantomjs-prebuilt').path)"`
+- echo Using PhanthomJS at $JSJOB_BROWSER
 sudo: false
 deploy:
   provider: npm
