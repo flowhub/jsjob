@@ -36,6 +36,7 @@ runJobs = (runner, inputs, options, callback) ->
         obj[k] = item
       return obj
     .nodeify callback
+  return
 
 describe 'Runner', ->
   solver = null
@@ -415,7 +416,7 @@ describe 'Runner', ->
     it 'each job should return correct result', (done) ->
       @timeout 9000
       options = {}
-      jobs = 
+      jobs =
         returnerror:
           url: local 'return-error'
           payload: null
