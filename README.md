@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/flowhub/jsjob.svg?branch=master)](https://travis-ci.org/flowhub/jsjob)
 # JsJob
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/flowhub/jsjob.svg)](https://greenkeeper.io/)
+
 Run arbitrary JavaScript code as jobs, in a browser-based sandbox.
 
 Especially designed for medium to large-sized computations with no or limited access
