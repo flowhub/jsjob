@@ -35,7 +35,7 @@
     "grunt-exec": "^2.0.0",
     "grunt-gh-pages": "^1.0.0",
     "grunt-mocha-test": "^0.12.7",
-    "mocha": "^2.4.5",
+    "mocha": "^3.3.0",
     "phantomjs-prebuilt": "^2.1.12",
     "webpack": "^2.5.0"
   },
