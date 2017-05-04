@@ -327,6 +327,7 @@ describe 'Runner', ->
         chai.expect(uniques).to.eql expectUniques
 
         done()
+      return
 
   describe 'using scripts as API adapter', ->
     details = null
