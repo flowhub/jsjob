@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/the-grid/jsjob.svg?branch=master)](https://travis-ci.org/the-grid/jsjob)
+[![Build Status](https://travis-ci.org/flowhub/jsjob.svg?branch=master)](https://travis-ci.org/flowhub/jsjob)
 # JsJob
 
 Run arbitrary JavaScript code as jobs, in a browser-based sandbox.
@@ -28,7 +28,7 @@ Possibility of allowing 3rd-party extensions.
 
 ## Roadmap
 
-[2.x](https://github.com/the-grid/jsjob/milestones/2.x)
+[2.x](https://github.com/flowhub/jsjob/milestones/2.x)
 
 * Support for SlimerJS/Gecko and WebDriver
 * WebWorker and client-side runner support
@@ -37,7 +37,7 @@ Possibility of allowing 3rd-party extensions.
 
 * [noflo-jsjob](https://github.com/noflo/noflo-jsjob) makes it easy to use JsJob in [NoFlo](http://noflojs.org/) applications,
 and create distributed workers over AMQP/RabbitMQ or MQTT when combined with [noflo-msgflo](http://github.com/noflo/noflo-runtime-msgflo).
-* [jsjob-ethereum](https://github.com/the-grid/jsjob-ethereum) is an experiement for a decentralized
+* [jsjob-ethereum](https://github.com/flowhub/jsjob-ethereum) is an experiement for a decentralized
 computation market using the [Ethereum](https://www.ethereum.org/) blockchain.
 * ... Let us know about your project, and we'll link it here!
 
@@ -64,7 +64,7 @@ Alternatively, get PhantomJS 1.x from NPM
 [JsJob plugin](./examples/sudoku.js) |
 [Input format](http://www2.warwick.ac.uk/fac/sci/moac/people/students/peter_cock/python/sudoku/)
 
-    echo '{"board":".94...13..............76..2.8..1.....32.........2...6.....5.4.......8..7..63.4..8"}' | jsjob-run https://the-grid.github.io/jsjob/examples/sudoku.js
+    echo '{"board":".94...13..............76..2.8..1.....32.........2...6.....5.4.......8..7..63.4..8"}' | jsjob-run https://flowhub.github.io/jsjob/examples/sudoku.js
 
 ## Usage
 
@@ -138,7 +138,7 @@ For an up-to-date list, use `jsjob-run --help`
 
 ### Get the code
 
-    git clone git@github.com:the-grid/jsjob.git
+    git clone git@github.com:flowhub/jsjob.git
 
 ### Run [the tests](./spec)
 
@@ -146,11 +146,11 @@ For an up-to-date list, use `jsjob-run --help`
 
 ### File an issue
 
-Check the [existing list](https://github.com/the-grid/jsjob/issues) first.
+Check the [existing list](https://github.com/flowhub/jsjob/issues) first.
 
 ### Make a pull request
 
-Fork and [submit on Github](https://github.com/the-grid/jsjob/pulls)
+Fork and [submit on Github](https://github.com/flowhub/jsjob/pulls)
 
 ### Make a release
 

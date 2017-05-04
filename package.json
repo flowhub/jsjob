@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/the-grid/jsjob.git"
+    "url": "git+ssh://git@github.com/flowhub/jsjob.git"
   },
   "keywords": [
     "javascript",
@@ -20,9 +20,9 @@
   "author": "Jon Nordby <jononor@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/the-grid/jsjob/issues"
+    "url": "https://github.com/flowhub/jsjob/issues"
   },
-  "homepage": "https://github.com/the-grid/jsjob#readme",
+  "homepage": "https://github.com/flowhub/jsjob#readme",
   "devDependencies": {
     "bluebird": "^3.3.4",
     "chai": "^1.10.0",
