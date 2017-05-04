@@ -2,7 +2,7 @@
 // coffee! is just WebPack build-time magic, can be configured away
 // Bundle using:
 //   webpack examples/sudoku.js dist/examples/sudoku.js
-var sudoku = require('coffee!./sudoku.coffee');
+var sudoku = require('coffee-loader!./sudoku.coffee');
 
 // Implement JsJob entrypoint.
 // Should be kept small and call into other functions for the real work
