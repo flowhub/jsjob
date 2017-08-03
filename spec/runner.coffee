@@ -78,7 +78,7 @@ describe 'Runner', ->
       page = ""
       options = {}
       solver.runJob filter, page, options, (err, solution, details) ->
-        chai.expect(err).to.be.a 'object'
+        chai.expect(err).to.be.a 'error'
         chai.expect(err.message).to.contain 'window.jsJobRun'
         done()
 
@@ -89,7 +89,7 @@ describe 'Runner', ->
       page = ""
       options = {}
       solver.runJob filter, page, options, (err, solution, details) ->
-        chai.expect(err).to.be.a 'object'
+        chai.expect(err).to.be.a 'error'
         chai.expect(err.message).to.contain 'window.jsJobRun'
         done()
 
@@ -99,7 +99,7 @@ describe 'Runner', ->
       page = ""
       options = {}
       solver.runJob filter, page, options, (err, solution, details) ->
-        chai.expect(err).to.be.a 'object'
+        chai.expect(err).to.be.a 'error'
         chai.expect(err.message).to.contain 'this is my error'
         done()
 
@@ -109,7 +109,7 @@ describe 'Runner', ->
       page = ""
       options = {}
       solver.runJob filter, page, options, (err, solution, details) ->
-        chai.expect(err).to.be.a 'object'
+        chai.expect(err).to.be.a 'error'
         chai.expect(err.message).to.contain 'this error was thrown'
         chai.expect(err.stack).to.contain 'mythrowingfunction'
         chai.expect(err.stack).to.contain 'return-thrown-error.js:3'
@@ -122,7 +122,7 @@ describe 'Runner', ->
       options = {}
       solver.runJob filter, page, options, (err, solution, details) ->
         chai.expect(solution).to.not.exist
-        chai.expect(err).to.be.a 'object'
+        chai.expect(err).to.be.a 'error'
         chai.expect(err.message).to.contain 'solution nor error'
         done()
 
@@ -144,7 +144,7 @@ describe 'Runner', ->
       options = {}
       solver.runJob filter, page, options, (err, solution, details) ->
         chai.expect(solution).to.not.exist
-        chai.expect(err).to.be.an 'object'
+        chai.expect(err).to.be.an 'error'
         chai.expect(err.message).to.contain 'thrown in polySolvePage'
         done()
 
@@ -156,7 +156,7 @@ describe 'Runner', ->
       options = {}
       solver.runJob filter, page, options, (err, solution, details) ->
         chai.expect(solution).to.not.exist
-        chai.expect(err).to.be.an 'object'
+        chai.expect(err).to.be.an 'error'
         chai.expect(err.message).to.contain 'thrown in a setTimeout'
         chai.expect(err.message).to.contain 'poly: main start'
         chai.expect(err.stack, 'stack should not duplicate message').to.not.contain 'poly: main start'
@@ -170,7 +170,7 @@ describe 'Runner', ->
       options = {}
       solver.runJob filter, page, options, (err, solution, details) ->
         chai.expect(solution).to.not.exist
-        chai.expect(err).to.be.an 'object'
+        chai.expect(err).to.be.an 'error'
         chai.expect(err.message).to.contain 'function'
         chai.expect(err.message).to.contain 'line'
         done()
@@ -182,7 +182,7 @@ describe 'Runner', ->
       options = {}
       solver.runJob filter, page, options, (err, solution, details) ->
         chai.expect(solution).to.not.exist
-        chai.expect(err).to.be.an 'object'
+        chai.expect(err).to.be.an 'error'
         chai.expect(err.message).to.contain 'function'
         chai.expect(err.message).to.contain 'line'
         done()
@@ -193,7 +193,7 @@ describe 'Runner', ->
       page = ""
       options = {}
       solver.runJob filter, page, options, (err, solution, details) ->
-        chai.expect(err).to.be.a 'object'
+        chai.expect(err).to.be.a 'error'
         chai.expect(err.message).to.contain 'custom error'
         chai.expect(err).to.include.keys ['myproperty', 'otherproperty']
         chai.expect(err.myproperty).to.equal 'myvalue'
@@ -364,7 +364,7 @@ describe 'Runner', ->
       page = ""
       options = {}
       solver.runJob filter, page, options, (err, solution, details) ->
-        chai.expect(err).to.be.a 'object'
+        chai.expect(err).to.be.a 'error'
         chai.expect(err.message).to.contain 'TIMEOUT'
         done()
 
@@ -406,7 +406,7 @@ describe 'Runner', ->
       options = {}
       solver.runJob filter, page, options, (err, solution, details) ->
         chai.expect(solution).to.not.exist
-        chai.expect(err).to.be.a 'object'
+        chai.expect(err).to.be.a 'error'
         chai.expect(err.message).to.include 'hard timeout'
         chai.expect(err.message).to.include 'logged before infinite loop'
         chai.expect(err.message).to.include 'poly: starting'
@@ -478,7 +478,7 @@ describe 'Runner', ->
       chai.expect(Object.keys(solver.jobs)).to.have.length 0
       solver.runJob filter, page, options, (err, outdata, details) ->
         chai.expect(outdata).to.not.exist
-        chai.expect(err).to.be.a 'object'
+        chai.expect(err).to.be.a 'error'
         chai.expect(err.message).to.not.include 'returned falsy'
         chai.expect(err.message).to.not.include 'and no Error'
         chai.expect(err.message).to.include 'child process terminated'
@@ -518,7 +518,7 @@ describe 'Runner.stop() with in-flight jobs', ->
     options = {}
     solver.runJob filter, page, options, (err, outdata, details) ->
       chai.expect(outdata).to.not.exist
-      chai.expect(err).to.be.a 'object'
+      chai.expect(err).to.be.a 'error'
       chai.expect(err.message).to.include 'JsJob cancelled due to Runner.stop()'
       chai.expect(err.type).to.equal "cancelled" # so apps can detect this kind of error and ignore it, as likely they intended to do stop()
       done()
