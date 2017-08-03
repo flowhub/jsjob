@@ -27,7 +27,7 @@
     "bluebird": "^3.3.4",
     "chai": "^4.0.1",
     "coffee-loader": "^0.7.2",
-    "finitedomain": "^1.3.1",
+    "finitedomain": "^3.0.0",
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
     "grunt-coffeelint": "0.0.15",
