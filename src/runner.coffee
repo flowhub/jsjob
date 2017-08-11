@@ -318,7 +318,7 @@ class PhantomProcess
       @stopping = true
       @child.kill 'SIGKILL'
       # should now fire exit handler
-    setTimeout onHardTimeout, @options.hardtimeout
+    @child.hardTimeout = setTimeout onHardTimeout, @options.hardtimeout
 
     @stdout = ""
     @child.stdout.on 'data', (data) =>
@@ -354,8 +354,10 @@ class PhantomProcess
         callback @cancelError
       else
         callback null, job.id
+
       callback = null
-      @stopping = null
+      @stopping = false
+      clearTimeout @child.hardTimeout
       return
 
   stop: () ->
